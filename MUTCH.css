@@ -1,0 +1,124 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
+  color: #fff;
+  background: #111;
+  overflow: hidden; /* スクロールさせない */
+}
+
+/* ===== 背景（写真A） ===== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("photoA.jpg") center / cover no-repeat;
+  z-index: -2;
+}
+
+/* 写真の上にうっすら暗い膜（0.3 で濃さ調整） */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: -1;
+}
+
+/* ===== 画面全体のレイアウト ===== */
+.page {
+  height: 100vh;
+  height: 100svh; /* スマホのアドレスバー分も考慮 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  text-align: center;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 9vw, 5rem);
+  letter-spacing: 0.2em;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+}
+
+.catch {
+  margin-top: 8px;
+  opacity: 0.9;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* ===== 公式SNS（4つ並び） ===== */
+.sns-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  list-style: none;
+  margin-top: 48px;
+  width: 100%;
+  max-width: 640px;
+}
+
+.sns-list a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.sns-list a:hover {
+  transform: translateY(-4px);
+  opacity: 0.85;
+}
+
+/* SNSの画像（丸くしたい場合は border-radius を 50% に） */
+.sns-list img {
+  width: 100%;
+  max-width: 110px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15); /* 画像が無いときの仮の枠 */
+}
+
+footer {
+  position: fixed;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.sns-text-icon {
+    width: 100%;
+    max-width: 110px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background: #000;   /* 四角の色 */
+    color: #fff;        /* 𝕏の色 */
+    font-size: 3rem;    /* 𝕏の大きさ */
+    line-height: 1;
+  }
+
+/* ===== スマホでは2×2に ===== */
+@media (max-width: 480px) {
+  .sns-list {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 280px;
+    gap: 20px 28px;
+    margin-top: 36px;
+  }
+}
