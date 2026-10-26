@@ -113,6 +113,30 @@ footer {
     line-height: 1;
   }
 
+/* ===== 言語切り替え（右上） ===== */
+.lang-switch {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+}
+
+.lang-switch a {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.8rem;
+  background: rgba(0, 0, 0, 0.3);
+  transition: background 0.2s;
+}
+
+.lang-switch a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
 /* ===== スマホでは2×2に ===== */
 @media (max-width: 480px) {
   .sns-list {
