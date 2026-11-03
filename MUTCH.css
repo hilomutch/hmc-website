@@ -139,7 +139,7 @@ footer {
 
 /* ===== 中国版：枠は110pxのまま、中の画像だけ小さく ===== */
 .cn .sns-list img.icon-small {
-  padding: 10px;          /* ← この数字を大きくするほど中の画像が小さくなる */
+  padding: 15px;          /* ← この数字を大きくするほど中の画像が小さくなる */
   object-fit: contain;    /* 画像を切らずに枠の中に収める */
 }
 
