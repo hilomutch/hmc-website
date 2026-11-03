@@ -137,6 +137,11 @@ footer {
   background: rgba(255, 255, 255, 0.2);
 }
 
+/* ===== 中国版だけアイコンを小さく ===== */
+.cn .sns-list img {
+  max-width: 90px;   /* ← この数字で大きさを調整（日本版は110px） */
+}
+
 /* ===== スマホでは2×2に ===== */
 @media (max-width: 480px) {
   .sns-list {
