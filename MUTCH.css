@@ -14,7 +14,7 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: url("photoA.jpg") center / cover no-repeat;
+  background: url("Images/IMG_1864.jpg") center / cover no-repeat;
   z-index: -2;
 }
 
