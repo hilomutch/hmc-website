@@ -1,0 +1,148 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
+  background: #111;
+  color: #fff;
+  line-height: 1.7;
+}
+
+/* ===== ヘッダー ===== */
+.site-header {
+  text-align: center;
+  padding: 64px 20px 40px;
+}
+
+.site-header h1 {
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  letter-spacing: 0.2em;
+}
+
+.site-header p {
+  opacity: 0.7;
+  letter-spacing: 0.15em;
+}
+
+/* ===== 行事ごとのまとまり ===== */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.event { margin-bottom: 72px; }
+
+.event-title {
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  border-left: 4px solid #fff;
+  padding-left: 12px;
+}
+
+.event-info {
+  margin: 4px 0 20px 16px;
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+/* ===== 写真の一覧 ===== */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.gallery-item a {
+  display: block;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #222;
+}
+
+.gallery-item img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;     /* 一覧での縦横比（正方形なら 1 / 1） */
+  object-fit: cover;       /* 一覧では端を切って形を揃える */
+  transition: transform 0.3s;
+}
+
+.gallery-item a:hover img { transform: scale(1.04); }
+
+.gallery-item figcaption {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* ===== フッター ===== */
+.site-footer {
+  text-align: center;
+  padding: 32px 0;
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+/* ===== 拡大表示 ===== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.94);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.lightbox.is-open { display: flex; }
+
+.lb-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 92vw;
+}
+
+.lb-img {
+  max-width: 92vw;
+  max-height: 82vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;     /* 拡大時は切らずに全体を表示 */
+}
+
+.lb-caption { font-size: 0.9rem; opacity: 0.85; }
+
+.lb-original {
+  font-size: 0.8rem;
+  color: #fff;
+  opacity: 0.6;
+}
+.lb-original:hover { opacity: 1; }
+
+.lb-btn {
+  position: absolute;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 3rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+  padding: 12px 16px;
+}
+.lb-btn:hover { opacity: 1; }
+
+.lb-close { top: 8px; right: 12px; font-size: 2.5rem; }
+.lb-prev  { left: 8px; top: 50%; transform: translateY(-50%); }
+.lb-next  { right: 8px; top: 50%; transform: translateY(-50%); }
+
+/* ===== スマホ ===== */
+@media (max-width: 600px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .lb-prev, .lb-next { display: none; }  /* スマホはスワイプで移動 */
+}
