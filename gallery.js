@@ -2,23 +2,42 @@
 document.getElementById("year").textContent = new Date().getFullYear();
 
 // ===== 拡大表示 =====
-const links    = Array.from(document.querySelectorAll(".gallery-item a"));
+const items    = Array.from(document.querySelectorAll(".gallery-item"));
 const lightbox = document.getElementById("lightbox");
 const lbImg    = lightbox.querySelector(".lb-img");
-const lbCap    = lightbox.querySelector(".lb-caption");
+const lbTitle  = lightbox.querySelector(".lb-title");
+const lbDate   = lightbox.querySelector(".lb-date");
+const lbPlace  = lightbox.querySelector(".lb-place");
+const lbDesc   = lightbox.querySelector(".lb-desc");
 const lbOrig   = lightbox.querySelector(".lb-original");
 let current = 0;
 
-function show(index) {
-  current = (index + links.length) % links.length; // 最後の次は最初に戻る
-  const link = links[current];
-  const img  = link.querySelector("img");
-  const cap  = link.closest("figure").querySelector("figcaption");
+function getText(item, selector) {
+  const el = item.querySelector(selector);
+  return el ? el.textContent.trim() : "";
+}
 
-  lbImg.src = link.href;            // 元の画像ファイルをそのまま表示
+// 日時・場所が空なら、その行ごと隠す
+function setRow(dd, text) {
+  dd.textContent = text;
+  dd.parentElement.hidden = !text;
+}
+
+function show(index) {
+  current = (index + items.length) % items.length;
+  const item = items[current];
+  const link = item.querySelector("a");
+  const img  = item.querySelector("img");
+  const desc = item.querySelector(".d-desc");
+
+  lbImg.src = link.href;   // 元の画像ファイルをそのまま表示
   lbImg.alt = img.alt;
-  lbCap.textContent = cap ? cap.textContent : "";
+  lbTitle.textContent = getText(item, "figcaption");
+  setRow(lbDate,  getText(item, ".d-date"));
+  setRow(lbPlace, getText(item, ".d-place"));
+  lbDesc.innerHTML = desc ? desc.innerHTML : "";
   lbOrig.href = link.href;
+  lightbox.scrollTop = 0;
 }
 
 function open(index) {
@@ -34,8 +53,8 @@ function close() {
   document.body.style.overflow = "";
 }
 
-links.forEach((link, i) => {
-  link.addEventListener("click", (e) => {
+items.forEach((item, i) => {
+  item.querySelector("a").addEventListener("click", (e) => {
     e.preventDefault();
     open(i);
   });
@@ -45,7 +64,7 @@ lightbox.querySelector(".lb-close").addEventListener("click", close);
 lightbox.querySelector(".lb-prev").addEventListener("click", () => show(current - 1));
 lightbox.querySelector(".lb-next").addEventListener("click", () => show(current + 1));
 
-// 写真の外側（黒い部分）をクリックで閉じる
+// 写真の外側（ぼやけた部分）を押したら閉じる
 lightbox.addEventListener("click", (e) => {
   if (e.target === lightbox) close();
 });
@@ -58,13 +77,17 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowRight") show(current + 1);
 });
 
-// スマホのスワイプ
-let startX = 0;
+// スマホの左右スワイプ（縦スクロールとは区別）
+let startX = 0, startY = 0;
 lightbox.addEventListener("touchstart", (e) => {
   startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
 }, { passive: true });
 
 lightbox.addEventListener("touchend", (e) => {
-  const diff = e.changedTouches[0].clientX - startX;
-  if (Math.abs(diff) > 50) show(current + (diff < 0 ? 1 : -1));
+  const dx = e.changedTouches[0].clientX - startX;
+  const dy = e.changedTouches[0].clientY - startY;
+  if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+    show(current + (dx < 0 ? 1 : -1));
+  }
 });

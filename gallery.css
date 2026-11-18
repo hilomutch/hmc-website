@@ -40,16 +40,16 @@ main {
 }
 
 .event-info {
-  margin: 4px 0 20px 16px;
+  margin: 4px 0 24px 16px;
   font-size: 0.85rem;
   opacity: 0.6;
 }
 
-/* ===== 写真の一覧 ===== */
+/* ===== 写真の一覧（パソコン：タイル並び） ===== */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+  gap: 28px 16px;
 }
 
 .gallery-item a {
@@ -62,17 +62,18 @@ main {
 .gallery-item img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;     /* 一覧での縦横比（正方形なら 1 / 1） */
-  object-fit: cover;       /* 一覧では端を切って形を揃える */
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
   transition: transform 0.3s;
 }
 
 .gallery-item a:hover img { transform: scale(1.04); }
 
+/* 写真の下の作品タイトル（真ん中） */
 .gallery-item figcaption {
-  margin-top: 6px;
-  font-size: 0.85rem;
-  opacity: 0.8;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.95rem;
 }
 
 /* ===== フッター ===== */
@@ -87,42 +88,82 @@ main {
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.94);
-  display: none;
-  justify-content: center;
-  align-items: center;
   z-index: 100;
+  overflow-y: auto;                     /* 詳細が長いときはスクロール */
+  padding: 72px 20px 56px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);          /* 後ろのページをぼかす */
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s, visibility 0.35s;
 }
 
-.lightbox.is-open { display: flex; }
-
-.lb-figure {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  max-width: 92vw;
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
 }
+
+.lb-content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  transform: translateY(16px) scale(0.98);
+  transition: transform 0.35s;
+}
+
+.lightbox.is-open .lb-content { transform: none; }
 
 .lb-img {
-  max-width: 92vw;
-  max-height: 82vh;
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 70vh;
   width: auto;
   height: auto;
-  object-fit: contain;     /* 拡大時は切らずに全体を表示 */
+  border-radius: 4px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
 }
 
-.lb-caption { font-size: 0.9rem; opacity: 0.85; }
+.lb-detail { margin-top: 28px; }
+
+/* 作品タイトル（大きめ・太字・真ん中） */
+.lb-title {
+  font-size: clamp(1.5rem, 4.5vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.lb-meta {
+  display: inline-block;
+  margin-top: 14px;
+  text-align: left;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.lb-meta div { display: flex; }
+.lb-meta div[hidden] { display: none; }
+.lb-meta dt { flex-shrink: 0; }
+
+/* 作品紹介文（真ん中） */
+.lb-desc {
+  max-width: 640px;
+  margin: 24px auto 0;
+  line-height: 1.9;
+}
 
 .lb-original {
+  display: inline-block;
+  margin-top: 28px;
   font-size: 0.8rem;
   color: #fff;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 .lb-original:hover { opacity: 1; }
 
 .lb-btn {
-  position: absolute;
+  position: fixed;
   background: none;
   border: none;
   color: #fff;
@@ -131,18 +172,30 @@ main {
   cursor: pointer;
   opacity: 0.7;
   padding: 12px 16px;
+  z-index: 1;
 }
 .lb-btn:hover { opacity: 1; }
 
 .lb-close { top: 8px; right: 12px; font-size: 2.5rem; }
-.lb-prev  { left: 8px; top: 50%; transform: translateY(-50%); }
-.lb-next  { right: 8px; top: 50%; transform: translateY(-50%); }
+.lb-prev  { left: 8px;  top: 40%; }
+.lb-next  { right: 8px; top: 40%; }
 
-/* ===== スマホ ===== */
+/* ===== スマホ：写真を1枚ずつ縦に並べる ===== */
 @media (max-width: 600px) {
   .gallery {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
-  .lb-prev, .lb-next { display: none; }  /* スマホはスワイプで移動 */
+
+  /* 端を切らずに写真全体を表示 */
+  .gallery-item img {
+    aspect-ratio: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .gallery-item a:hover img { transform: none; }
+
+  .lb-prev, .lb-next { display: none; }  /* スマホは左右スワイプで移動 */
+  .lightbox { padding: 64px 16px 48px; }
 }

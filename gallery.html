@@ -15,19 +15,25 @@
   </header>
 
   <main>
-    <!-- ===== 行事ごとに、この section をコピーして増やしてください ===== -->
+    <!-- ===== 行事ごとに、この section をコピーして増やす ===== -->
     <section class="event">
       <h2 class="event-title">2025 〇〇展</h2>
       <p class="event-info">2025.10.01 – 10.05 ／ 〇〇ギャラリー</p>
 
       <div class="gallery">
-        <!-- 写真1枚ごとに figure をコピーして増やす
-             href と src には同じファイル名を書いてください -->
+        <!-- ===== 作品1点ごとに、この figure をコピーして増やす ===== -->
         <figure class="gallery-item">
           <a href="photos/2025-01.jpg">
             <img src="photos/2025-01.jpg" alt="作品タイトル" loading="lazy">
           </a>
           <figcaption>作品タイトル</figcaption>
+
+          <!-- 押したときに出る詳細（ページ上には表示されません） -->
+          <div class="item-detail" hidden>
+            <p class="d-date">2025.10.01 – 10.05</p>
+            <p class="d-place">〇〇ギャラリー</p>
+            <p class="d-desc">作品紹介文がここに入ります。<br>改行したいところには br を入れます。</p>
+          </div>
         </figure>
 
         <figure class="gallery-item">
@@ -35,6 +41,11 @@
             <img src="photos/2025-02.jpg" alt="作品タイトル" loading="lazy">
           </a>
           <figcaption>作品タイトル</figcaption>
+          <div class="item-detail" hidden>
+            <p class="d-date">2025.10.01 – 10.05</p>
+            <p class="d-place">〇〇ギャラリー</p>
+            <p class="d-desc">作品紹介文がここに入ります。</p>
+          </div>
         </figure>
 
         <figure class="gallery-item">
@@ -42,27 +53,11 @@
             <img src="photos/2025-03.jpg" alt="作品タイトル" loading="lazy">
           </a>
           <figcaption>作品タイトル</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section class="event">
-      <h2 class="event-title">2024 〇〇展</h2>
-      <p class="event-info">2024.10.01 – 10.05 ／ 〇〇ホール</p>
-
-      <div class="gallery">
-        <figure class="gallery-item">
-          <a href="photos/2024-01.jpg">
-            <img src="photos/2024-01.jpg" alt="作品タイトル" loading="lazy">
-          </a>
-          <figcaption>作品タイトル</figcaption>
-        </figure>
-
-        <figure class="gallery-item">
-          <a href="photos/2024-02.jpg">
-            <img src="photos/2024-02.jpg" alt="作品タイトル" loading="lazy">
-          </a>
-          <figcaption>作品タイトル</figcaption>
+          <div class="item-detail" hidden>
+            <p class="d-date">2025.10.01 – 10.05</p>
+            <p class="d-place">〇〇ギャラリー</p>
+            <p class="d-desc">作品紹介文がここに入ります。</p>
+          </div>
         </figure>
       </div>
     </section>
@@ -73,13 +68,21 @@
   <!-- ===== 拡大表示（ここは触らなくてOK） ===== -->
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <button class="lb-btn lb-close" type="button" aria-label="閉じる">×</button>
-    <button class="lb-btn lb-prev" type="button" aria-label="前の写真">‹</button>
-    <figure class="lb-figure">
+    <button class="lb-btn lb-prev" type="button" aria-label="前の作品">‹</button>
+    <button class="lb-btn lb-next" type="button" aria-label="次の作品">›</button>
+
+    <div class="lb-content">
       <img class="lb-img" src="" alt="">
-      <figcaption class="lb-caption"></figcaption>
-      <a class="lb-original" href="" target="_blank" rel="noopener">原寸で開く</a>
-    </figure>
-    <button class="lb-btn lb-next" type="button" aria-label="次の写真">›</button>
+      <div class="lb-detail">
+        <h3 class="lb-title"></h3>
+        <dl class="lb-meta">
+          <div><dt>展示日時：</dt><dd class="lb-date"></dd></div>
+          <div><dt>展示場所：</dt><dd class="lb-place"></dd></div>
+        </dl>
+        <p class="lb-desc"></p>
+        <a class="lb-original" href="" target="_blank" rel="noopener">原寸で開く</a>
+      </div>
+    </div>
   </div>
 
   <script src="gallery.js"></script>
